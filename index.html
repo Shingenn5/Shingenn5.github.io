@@ -28,7 +28,7 @@
         </div>
 
         <div class="card-body bg-white p-4 p-sm-5 text-center">
-            <div class="my-3">
+            <div class="my-3" aria-live="polite">
                 <i id="wIcon" class="bi bi-cloud-sun text-primary" style="font-size: 7rem;"></i>
                 <h1 id="temp" class="display-1 fw-bolder text-dark mt-2 mb-0">--°</h1>
                 <h5 id="wDesc" class="text-muted fw-bold text-uppercase tracking-wider">Fetching...</h5>
@@ -37,29 +37,29 @@
             <div class="row g-2 mt-5">
                 <div class="col-4">
                     <div class="p-2 border rounded-3 bg-light h-100">
-                        <i class="bi bi-droplet-half text-info fs-4"></i>
-                        <h6 id="hum" class="mb-0 mt-1 fw-bold">--%</h6>
-                        <small class="text-muted" style="font-size: 0.6rem;">HUMIDITY</small>
+                        <i class="bi bi-droplet-half text-info fs-4" aria-hidden="true"></i>
+                        <h6 id="hum" class="mb-0 mt-1 fw-bold text-dark">--%</h6>
+                        <small class="text-dark fw-semibold" style= "font-size: 0.6rem;">HUMIDITY</small>
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="p-2 border rounded-3 bg-dark h-100">
                         <i class="bi bi-wind text-dark fs-4"></i>
                         <h6 id="wind" class="mb-0 mt-1 fw-bold text-dark">--</h6>
-                        <small class="text-muted" style="font-size: 0.6rem;">WIND MPH</small>
+                        <small class="text-dark fw-semibold" style="font-size: 0.6rem;">WIND MPH</small>
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="p-2 border rounded-3 bg-light h-100">
                         <i class="bi bi-thermometer-sun text-warning fs-4"></i>
                         <h6 id="feelsLike" class="mb-0 mt-1 fw-bold">--°</h6>
-                        <small class="text-muted" style="font-size: 0.6rem;">FEELS LIKE</small>
+                        <small class="text-dark" style="font-size: 0.6rem;">FEELS LIKE</small>
                     </div>
                 </div>
             </div>
 
             <div class="mt-5">
-                <small class="text-muted small">Data by <a href="https://open-meteo.com/" target="_blank" class="text-primary text-decoration-none fw-bold">Open-Meteo</a></small>
+                <small class="text-dark small">Data by <a href="https://open-meteo.com/" target="_blank" class="text-primary text-decoration-none fw-bold">Open-Meteo</a></small>
             </div>
         </div>
     </div>
