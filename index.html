@@ -1,19 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
-<title>Weather App</title>
-<link rel="icon" type="image/x-icon" href="/images/favicon.ico">
-<link rel="apple-touch-icon" href="images/apple-touch-icon-iphone-60x60.png">
-<link rel="apple-touch-icon" sizes="60x60" href="images/apple-touch-icon-ipad-76x76.png">
-<link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-iphone-retina-120x120.png">
-<link rel="apple-touch-icon" sizes="144x144" href="images/apple-touch-icon-ipad-retina-152x152.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.3/dist/zephyr/bootstrap.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.3/dist/zephyr/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 </head>
 <body class="bg-primary-subtle">
 
@@ -28,7 +21,7 @@
         </div>
 
         <div class="card-body bg-white p-4 p-sm-5 text-center">
-            <div class="my-3" aria-live="polite">
+            <div class="my-3">
                 <i id="wIcon" class="bi bi-cloud-sun text-primary" style="font-size: 7rem;"></i>
                 <h1 id="temp" class="display-1 fw-bolder text-dark mt-2 mb-0">--°</h1>
                 <h5 id="wDesc" class="text-muted fw-bold text-uppercase tracking-wider">Fetching...</h5>
@@ -37,11 +30,12 @@
             <div class="row g-2 mt-5">
                 <div class="col-4">
                     <div class="p-2 border rounded-3 bg-light h-100">
-                        <i class="bi bi-droplet-half text-info fs-4" aria-hidden="true"></i>
+                        <i class="bi bi-droplet-half text-info fs-4"></i>
                         <h6 id="hum" class="mb-0 mt-1 fw-bold text-dark">--%</h6>
-                        <small class="text-dark fw-semibold" style= "font-size: 0.6rem;">HUMIDITY</small>
+                        <small class="text-dark fw-semibold" style="font-size: 0.6rem;">HUMIDITY</small>
                     </div>
                 </div>
+
                 <div class="col-4">
                     <div class="p-2 border rounded-3 bg-light h-100">
                         <i class="bi bi-wind text-dark fs-4"></i>
@@ -49,6 +43,7 @@
                         <small class="text-dark fw-semibold" style="font-size: 0.6rem;">WIND MPH</small>
                     </div>
                 </div>
+
                 <div class="col-4">
                     <div class="p-2 border rounded-3 bg-light h-100">
                         <i class="bi bi-thermometer-sun text-warning fs-4"></i>
@@ -66,38 +61,34 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
 // get weather for cookeville
 const api = "https://api.open-meteo.com/v1/forecast?latitude=36.1628&longitude=-85.5016&current=temperature_2m,relative_humidity_2m,weather_code,apparent_temperature,wind_speed_10m&temperature_unit=fahrenheit&wind_speed_unit=mph"
 
-fetch(api)
-.then(r => r.json())
-.then(d => {
-    // pull out the data points
-    let t = d.current.temperature_2m
-    let h = d.current.relative_humidity_2m
+fetch(api).then(r => r.json()).then(d => {
+    // grabbin the goods
+    let t = d.current.temperature_2m, h = d.current.relative_humidity_2m
     let c = d.current.weather_code
-    let feels = d.current.apparent_temperature
-    let w = d.current.wind_speed_10m
+    let feels = d.current.apparent_temperature, w = d.current.wind_speed_10m
 
-    let i = "bi-question-circle"
-    let txt = "Unknown"
+    let i = "bi-question-circle", txt = "Unknown"
 
-    // check codes and set the right icons
-    if(c === 0){ i="bi-sun-fill text-warning"; txt="Clear Sky"; }
-    else if(c>0 && c<=3){ i="bi-cloud-sun-fill text-primary"; txt="Partly Cloudy"; }
-    else if(c>=45 && c<=48){ i="bi-cloud-haze2-fill text-secondary"; txt="Foggy"; }
-    else if(c>=51 && c<=67){ i="bi-cloud-rain-heavy-fill text-info"; txt="Raining"; }
-    else if(c>=71 && c<=77){ i="bi-snow text-primary"; txt="Snowing"; }
-    else if(c>=95){ i="bi-cloud-lightning-fill text-danger"; txt="Storming"; }
+    // vibe check for the sky
+    if (c == 0) { i="bi-sun-fill text-warning"; txt="Clear Sky"; }
+    else if (c <= 3) { i="bi-cloud-sun-fill text-primary"; txt="Partly Cloudy"; }
+    else if (c <= 48) { i="bi-cloud-haze2-fill text-secondary"; txt="Foggy"; }
+    else if (c <= 67) { i="bi-cloud-rain-heavy-fill text-info"; txt="Raining"; }
+    else if (c <= 77) { i="bi-snow text-primary"; txt="Snowing"; }
+    else { i="bi-cloud-lightning-fill text-danger"; txt="Storming"; }
 
     // update the screen
+    // putting the data into html tags
+    // I Used Gemini and Claude to assist with bug fixing, explaining what the code necessarily did, and formatting it to allow for better readability just for you :)
     document.querySelector('#temp').innerText = Math.round(t) + "°"
     document.querySelector('#hum').innerText = h + "%"
     document.querySelector('#wDesc').innerText = txt
-    document.querySelector('#wIcon').className = "bi " + i
+document.querySelector('#wIcon').className = "bi " + i
     document.querySelector('#feelsLike').innerText = Math.round(feels) + "°"
     document.querySelector('#wind').innerText = Math.round(w)
 })
