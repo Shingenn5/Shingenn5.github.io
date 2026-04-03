@@ -24,7 +24,7 @@
             <div class="my-3">
                 <i id="wIcon" class="bi bi-cloud-sun text-primary" style="font-size: 7rem;"></i>
                 <h1 id="temp" class="display-1 fw-bolder text-dark mt-2 mb-0">--°</h1>
-                <h5 id="wDesc" class="text-muted fw-bold text-uppercase tracking-wider">Fetching...</h5>
+                <h5 id="wDesc" class="text-muted fw-bold text-uppercase tracking-wider">Fetching</h5>
             </div>
 
             <div class="row g-2 mt-5">
@@ -63,43 +63,66 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
-// get weather for cookeville
+// get weather for Cookeville
 const api = "https://api.open-meteo.com/v1/forecast?latitude=36.1628&longitude=-85.5016&current=temperature_2m,relative_humidity_2m,weather_code,apparent_temperature,wind_speed_10m&temperature_unit=fahrenheit&wind_speed_unit=mph"
 
-fetch(api).then(r => r.json()).then(d => {
-    // grabbin the goods
-    let t = d.current.temperature_2m, h = d.current.relative_humidity_2m
-    let c = d.current.weather_code
-    let feels = d.current.apparent_temperature, w = d.current.wind_speed_10m
+fetch(api)
+.then(response => r.json())
+.then(data => {
+})
+  // get data
+    let t = data.current.temperature_2m
+    let h = data.current.relative_humidity_2m
+    let c = data.current.weather_code
+    let feels = data.current.apparent_temperature
+    let w = data.current.wind_speed_10m
+    let icon = "bi-question-circle"
+    let txt = "Unknown"
 
-    let i = "bi-question-circle", txt = "Unknown"
+  // check weather codes
+  if(c == 0) {
+    icon = "bi-sun-fill text-warning"
+    txt = "Clear Sky"
+  } 
+  else if(c < 10) {
+      icon = "bi-cloud-sun-fill text-primary"
+    txt = "Partly Cloudy"
+  } 
+  else if(c < 50) {
+    icon = "bi-cloud-haze2-fill text-secondary"
+      txt = "Foggy"
+  } 
+  else if(c < 70) {
+      icon = "bi-cloud-rain-heavy-fill text-info"
+    txt = "Raining"
+  } 
+  else if(c < 80) {
+    icon = "bi-snow text-primary"
+    txt = "Snowing"
+  } 
+  else {
+      icon = "bi-cloud-lightning-fill text-danger"
+    txt = "Storming"
+  }
 
-    // vibe check for the sky
-    if (c == 0) { i="bi-sun-fill text-warning"; txt="Clear Sky"; }
-    else if (c <= 3) { i="bi-cloud-sun-fill text-primary"; txt="Partly Cloudy"; }
-    else if (c <= 48) { i="bi-cloud-haze2-fill text-secondary"; txt="Foggy"; }
-    else if (c <= 67) { i="bi-cloud-rain-heavy-fill text-info"; txt="Raining"; }
-    else if (c <= 77) { i="bi-snow text-primary"; txt="Snowing"; }
-    else { i="bi-cloud-lightning-fill text-danger"; txt="Storming"; }
-
-    // update the screen
-    // putting the data into html tags
-    // I Used Gemini and Claude to assist with bug fixing, explaining what the code necessarily did, and formatting it to allow for better readability just for you :)
+    // update html
+    // gemini and claude helped fix bugs and make this readable just for you :)
     document.querySelector('#temp').innerText = Math.round(t) + "°"
     document.querySelector('#hum').innerText = h + "%"
     document.querySelector('#wDesc').innerText = txt
-document.querySelector('#wIcon').className = "bi " + i
+    document.querySelector('#wIcon').className = "bi " + icon
     document.querySelector('#feelsLike').innerText = Math.round(feels) + "°"
     document.querySelector('#wind').innerText = Math.round(w)
+
 })
-.catch(err => {
-    // show error if the api is dead
-    Swal.fire({
-        icon: 'error',
-        title: 'API Error',
-        text: 'Couldnt get the weather data'
-    })
-    console.log(err)
+.catch(function(bad) {
+  // API error
+  Swal.fire({
+    icon: 'error',
+    title: 'API Error',
+    text: 'Couldnt get the weather data'
+  })
+  console.log(bad)
 })
 </script>
 
