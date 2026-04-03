@@ -67,9 +67,8 @@
 const api = "https://api.open-meteo.com/v1/forecast?latitude=36.1628&longitude=-85.5016&current=temperature_2m,relative_humidity_2m,weather_code,apparent_temperature,wind_speed_10m&temperature_unit=fahrenheit&wind_speed_unit=mph"
 
 fetch(api)
-.then(response => r.json())
+.then(r => r.json())
 .then(data => {
-})
   // get data
     let t = data.current.temperature_2m
     let h = data.current.relative_humidity_2m
