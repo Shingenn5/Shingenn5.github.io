@@ -82,6 +82,7 @@
 // get weather for Cookeville
 const api = "https://api.open-meteo.com/v1/forecast?latitude=36.1628&longitude=-85.5016&current=temperature_2m,relative_humidity_2m,weather_code,apparent_temperature,wind_speed_10m&temperature_unit=fahrenheit&wind_speed_unit=mph"
 
+// fetch command
 fetch(api)
 .then(r => r.json())
 .then(data => {
@@ -94,7 +95,7 @@ fetch(api)
     let icon = "bi-question-circle"
     let txt = "Unknown"
 
-  // check weather codes
+  // check weather codes with if else statements
   if(c == 0) {
     icon = "bi-sun-fill text-warning"
     txt = "Clear Sky"
@@ -124,6 +125,8 @@ fetch(api)
     // update html
     // gemini and claude helped fix bugs and make this readable just for you :)
     // also used gemini for help creating UI of page. 
+
+    //queryselector to apply the information 
     document.querySelector('#temp').innerText = Math.round(t) + "°"
     document.querySelector('#hum').innerText = h + "%"
     document.querySelector('#wDesc').innerText = txt
@@ -133,7 +136,7 @@ fetch(api)
 
 })
 .catch(function(bad) {
-  // API error
+  // Shows if API call fails
   Swal.fire({
     icon: 'error',
     title: 'API Error',
