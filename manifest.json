@@ -1,6 +1,6 @@
 {
-  "name": "My App",
-  "short_name": "App",
+  "name": "Weather App",
+  "short_name": "Weather App",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
