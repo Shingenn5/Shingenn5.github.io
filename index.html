@@ -19,7 +19,7 @@
     <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touchicon-iphone-retina-120x120.png">
     <link rel="apple-touch-icon" sizes="144x144" href="images/apple-touchicon-ipad-retina-152x152.png">
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrapicons@1.11.3/font/bootstrap-icons.css">
 
     <link rel="manifest" href="manifest.json">
@@ -81,6 +81,11 @@
     <div class="row row-cols-1 row-cols-md-3 g-4"></div>
 </div>
 
+<!-- Add Windy.com radar map section -->
+<div id="windy-map" class="container mt-5">
+    <h2 class="text-center mb-4">Live Radar Map</h2>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
@@ -88,8 +93,8 @@
 function getLocation() {
   const lat = 36.1628;
   const lon = -85.5016;
-  const apiCurrent = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`;
-  const apiForecast = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=temperature_2m_max,temperature_2m_min&timezone=America%2FChicago`;
+  const apiCurrent = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=America%2FChicago&temperature_unit=fahrenheit&wind_speed_unit=mph`;
+  const apiForecast = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=America%2FChicago`;
 
   Swal.fire({
     title: 'Loading...',
@@ -105,24 +110,24 @@ function getLocation() {
     .then(data => {
       const [currentData, forecastData] = data;
       // get current weather data
-      let t = currentData.current_weather.temperature;
+      let t = currentData.current.temperature_2m;
       let icon = "bi-question-circle";
       let txt = "Unknown";
 
       // check weather codes
-      if (currentData.current_weather.weathercode == 0) {
+      if (currentData.current.weather_code == 0) {
         icon = "bi-sun-fill text-warning";
         txt = "Clear Sky";
-      } else if (currentData.current_weather.weathercode < 10) {
+      } else if (currentData.current.weather_code < 10) {
         icon = "bi-cloud-sun-fill text-primary";
         txt = "Partly Cloudy";
-      } else if (currentData.current_weather.weathercode < 50) {
+      } else if (currentData.current.weather_code < 50) {
         icon = "bi-cloud-haze2-fill text-secondary";
         txt = "Foggy";
-      } else if (currentData.current_weather.weathercode < 70) {
+      } else if (currentData.current.weather_code < 70) {
         icon = "bi-cloud-rain-heavy-fill text-info";
         txt = "Raining";
-      } else if (currentData.current_weather.weathercode < 80) {
+      } else if (currentData.current.weather_code < 80) {
         icon = "bi-snow text-primary";
         txt = "Snowing";
       } else {
@@ -134,9 +139,9 @@ function getLocation() {
       document.querySelector('#temp').innerText = Math.round(t) + "°";
       document.querySelector('#wDesc').innerText = txt;
       document.querySelector('#wIcon').className = "bi " + icon;
-      document.querySelector('#hum').innerText = currentData.current_weather.humidity + "%";
-      document.querySelector('#wind').innerText = currentData.current_weather.windspeed + " mph";
-      document.querySelector('#feelsLike').innerText = Math.round(currentData.current_weather.feels_like_temperature) + "°";
+      document.querySelector('#hum').innerText = currentData.current.relative_humidity_2m + "%";
+      document.querySelector('#wind').innerText = currentData.current.wind_speed_10m + " mph";
+      document.querySelector('#feelsLike').innerText = Math.round(currentData.current.apparent_temperature) + "°";
 
       // get forecast data
       const days = forecastData.daily.time.slice(0, 7);
@@ -158,6 +163,14 @@ function getLocation() {
         `;
         forecastContainer.appendChild(card);
       });
+
+      // Add Windy.com radar map
+      const iframe = document.createElement('iframe');
+      iframe.src = `https://embed.windy.com/embed2.html?lat=36.1628&lon=-85.5016&zoom=7&level=surface&overlay=wind&menu=&message=&marker=&forecast=off&metric=on`;
+      iframe.width = '100%';
+      iframe.height = '400px';
+      iframe.frameBorder = '0';
+      document.querySelector('#windy-map').appendChild(iframe);
 
       Swal.close();
     })
