@@ -82,71 +82,68 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
-// get weather for Cookeville
-const api = "https://api.open-meteo.com/v1/forecast?latitude=36.1628&longitude=-85.5016&current=temperature_2m,relative_humidity_2m,weather_code,apparent_temperature,wind_speed_10m&temperature_unit=fahrenheit&wind_speed_unit=mph"
-
-// fetch command
-fetch(api)
-.then(r => r.json())
-.then(data => {
-  // get data
-    let t = data.current.temperature_2m
-    let h = data.current.relative_humidity_2m
-    let c = data.current.weather_code
-    let feels = data.current.apparent_temperature
-    let w = data.current.wind_speed_10m
-    let icon = "bi-question-circle"
-    let txt = "Unknown"
-
-  // check weather codes with if else statements
-  if(c == 0) {
-    icon = "bi-sun-fill text-warning"
-    txt = "Clear Sky"
-  } 
-  else if(c < 10) {
-    icon = "bi-cloud-sun-fill text-primary"
-    txt = "Partly Cloudy"
-  } 
-  else if(c < 50) {
-    icon = "bi-cloud-haze2-fill text-secondary"
-    txt = "Foggy"
-  } 
-  else if(c < 70) {
-    icon = "bi-cloud-rain-heavy-fill text-info"
-    txt = "Raining"
-  } 
-  else if(c < 80) {
-    icon = "bi-snow text-primary"
-    txt = "Snowing"
-  } 
-  else {
-    icon = "bi-cloud-lightning-fill text-danger"
-    txt = "Storming"
+// gets the spot
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else { 
+    console.log("Geolocation is not supported by this browser.");
   }
+}
 
-    // gemini helped me with images on android/pixel
-    // update html
-    // gemini and claude helped fix bugs and make this readable just for you :)
-    // also used gemini for help creating UI of page. 
+// hit the api
+function showPosition(position) {
+  let lat = position.coords.latitude;
+  let lon = position.coords.longitude;
+  const api = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`;
 
-    //queryselector to apply the information 
-    document.querySelector('#temp').innerText = Math.round(t) + "°"
-    document.querySelector('#hum').innerText = h + "%"
-    document.querySelector('#wDesc').innerText = txt
-    document.querySelector('#wIcon').className = "bi " + icon
-    document.querySelector('#feelsLike').innerText = Math.round(feels) + "°"
-    document.querySelector('#wind').innerText = Math.round(w)
+  fetch(api)
+    .then(r => r.json())
+    .then(data => {
+      // get data
+      let t = data.current_weather.temperature;
+      let icon = "bi-question-circle";
+      let txt = "Unknown";
 
-})
-.catch(function(bad) {
-  // Shows if API call fails
-  Swal.fire({
-    icon: 'error',
-    title: 'API Error',
-    text: 'Couldnt get the weather data'
-  })
-  console.log(bad)
-})
+      // check weather codes
+      if (data.current_weather.weathercode == 0) {
+        icon = "bi-sun-fill text-warning";
+        txt = "Clear Sky";
+      } else if (data.current_weather.weathercode < 10) {
+        icon = "bi-cloud-sun-fill text-primary";
+        txt = "Partly Cloudy";
+      } else if (data.current_weather.weathercode < 50) {
+        icon = "bi-cloud-haze2-fill text-secondary";
+        txt = "Foggy";
+      } else if (data.current_weather.weathercode < 70) {
+        icon = "bi-cloud-rain-heavy-fill text-info";
+        txt = "Raining";
+      } else if (data.current_weather.weathercode < 80) {
+        icon = "bi-snow text-primary";
+        txt = "Snowing";
+      } else {
+        icon = "bi-cloud-lightning-fill text-danger";
+        txt = "Storming";
+      }
+
+      // update html
+      document.querySelector('#temp').innerText = Math.round(t) + "°";
+      document.querySelector('#wDesc').innerText = txt;
+      document.querySelector('#wIcon').className = "bi " + icon;
+    })
+    .catch(function(bad) {
+      // API error
+      Swal.fire({
+        icon: 'error',
+        title: 'API Error',
+        text: 'Couldnt get the weather data'
+      });
+      console.log(bad);
+    });
+}
+
+// fire automatically via window.onload
+window.onload = getLocation;
 </script>
 
 </body>
