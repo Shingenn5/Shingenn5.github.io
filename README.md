@@ -1,1 +1,33 @@
-# Shingenn5.github.io
+# Elliott Davis — Portfolio
+
+A responsive, dependency-free static portfolio. Site files live in `dist/` and can be served by any static host.
+
+## Local preview
+
+Run `npm run dev`, then open http://127.0.0.1:4173. Run `npm run check` for JavaScript syntax validation. No compilation or installation is required.
+
+## Editing
+
+- `dist/index.html`: employment-focused introduction, prominent contact links, personal profile, experience, credentials, and clickable project showcase.
+- `dist/styles.css`: colors, typography, responsive layout, and focus states.
+- `dist/app.js`: project notes and accessible native dialog behavior.
+- `.openai/hosting.json`: Sites identity and static output configuration.
+
+The page uses Google Fonts with local system-font fallbacks. Contact links open an email client, LinkedIn, or GitHub; the site does not collect submissions or require paid hosting.
+
+## Content review before public release
+
+The initial copy is based on the existing September 2026 resume and prior Rasputin project context. Confirm target roles, graduation date, certifications, project descriptions, and desired public email/LinkedIn details. Rasputin's native runtime description follows prior project direction, not a fresh source audit. No performance metrics or business results have been invented.
+
+The Rasputin logo and workspace screenshot come from its existing project assets; the screenshot is labeled as a development snapshot. The other projects use typographic project marks, not claimed existing product logos. Add approved repository links and a current downloadable resume when available. The initial hosted version is private; public audience settings must be changed before sharing it with employers.
+
+## Validation
+
+Checked local HTTP response, JavaScript syntax, desktop appearance, 390px mobile layout without horizontal overflow, all four project dialogs, Enter activation, Escape dismissal, focus return to the project icon, and browser console errors. Email and LinkedIn destinations match the source resume; external delivery/profile ownership was not tested.
+
+
+
+
+The header theme switch follows the system preference on first visit and remembers an explicit light/dark selection when browser storage is available. The portfolio is positioned for employment, not freelance commissions.
+
+The current contact surface intentionally publishes email, LinkedIn, GitHub, and city/state. The phone number from the source resume is omitted from the public page.

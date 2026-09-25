@@ -1,1 +1,5 @@
-.aider*
+.sites-runtime/
+node_modules/
+*.tgz
+*.zip
+.env*
