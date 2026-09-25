@@ -8,7 +8,7 @@ Run `npm run dev`, then open http://127.0.0.1:4173. Run `npm run check` for Java
 
 ## Editing
 
-- `dist/index.html`: employment-focused introduction, prominent contact links, personal profile, experience, credentials, and clickable project showcase.
+- `dist/index.html`: employment-focused introduction, prominent contact links, resume-aligned profile and experience, credentials, and clickable project showcase.
 - `dist/styles.css`: colors, typography, responsive layout, and focus states.
 - `dist/app.js`: project notes and accessible native dialog behavior.
 - `.openai/hosting.json`: Sites identity and static output configuration.
@@ -17,7 +17,7 @@ The page uses Google Fonts with local system-font fallbacks. Contact links open 
 
 ## Content review before public release
 
-The initial copy is based on the existing September 2026 resume and prior Rasputin project context. Confirm target roles, graduation date, certifications, project descriptions, and desired public email/LinkedIn details. Rasputin's native runtime description follows prior project direction, not a fresh source audit. No performance metrics or business results have been invented.
+The current copy is aligned with the September 2026 resume for education, skills, employment dates, certifications, and recognition. Geo Graph is described from its public repository and README. Rasputin's native runtime description follows current project direction where it differs from older resume wording. No performance metrics or business results have been invented.
 
 The Rasputin logo and workspace screenshot come from its existing project assets; the screenshot is labeled as a development snapshot. The other projects use typographic project marks, not claimed existing product logos. Add approved repository links and a current downloadable resume when available. The initial hosted version is private; public audience settings must be changed before sharing it with employers.
 
