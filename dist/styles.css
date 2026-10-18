@@ -21,3 +21,15 @@ body.cookie-banner-visible{padding-bottom:var(--cookie-banner-offset,240px)}
 html[data-theme="dark"] .cookie-banner{box-shadow:0 18px 60px #0009}
 @media(max-width:700px){.footer-links{width:100%;justify-content:space-between}.cookie-banner{grid-template-columns:1fr;gap:14px;padding:19px 20px;bottom:10px;width:calc(100% - 20px)}.cookie-actions{display:grid;grid-template-columns:1fr 1.35fr}.cookie-button{width:100%}}
 @media(max-width:390px){.cookie-actions{grid-template-columns:1fr}.cookie-banner{max-height:calc(100dvh - 20px);overflow:auto}}
+
+/* Resume-aligned skills and experience, using the existing portfolio palette. */
+.skills{border-top:1px solid var(--line);margin-top:48px;padding-top:32px}
+.skills-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px 32px}
+.skills-grid h3{font-size:16px;margin-bottom:6px;font-weight:600}
+.skills-grid p,.experience-copy p{font-size:14px;color:var(--muted)}
+.experience-copy p+p{margin-top:12px}
+nav a{display:inline-flex;align-items:center;min-height:44px}
+.dialog-head button{width:44px;height:44px}
+.hero-actions a{gap:12px}
+@media(max-width:850px){.skills-grid{grid-template-columns:repeat(2,minmax(0,1fr))}nav a:first-child{display:inline-flex}}
+@media(max-width:540px){.skills-grid{grid-template-columns:1fr;gap:20px}.hero-actions{display:flex}.hero-actions a{flex:1;justify-content:center;min-width:135px}.experience-copy{margin-top:8px}}
