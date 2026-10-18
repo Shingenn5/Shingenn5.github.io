@@ -11,9 +11,20 @@ Run `npm run dev`, then open http://127.0.0.1:4173. Run `npm run check` for Java
 - `dist/index.html`: employment-focused introduction, prominent contact links, resume-aligned profile and experience, credentials, and clickable project showcase.
 - `dist/styles.css`: colors, typography, responsive layout, and focus states.
 - `dist/app.js`: project notes and accessible native dialog behavior.
+- `dist/analytics.js`: consent storage, delayed analytics loading, and privacy-conscious interaction events.
 - `.openai/hosting.json`: Sites identity and static output configuration.
 
-The page uses Google Fonts with local system-font fallbacks. Contact links open an email client, LinkedIn, or GitHub; the site does not collect submissions or require paid hosting.
+The page uses Google Fonts with local system-font fallbacks. Contact links open an email client, LinkedIn, or GitHub; the site does not collect form submissions or require paid hosting.
+
+## Analytics setup
+
+The cookie banner and click tracking are prepared for the free Google Analytics 4 tier. Analytics remains completely off until `dist/index.html` contains a valid GA4 Measurement ID in this tag:
+
+```html
+<meta name="google-analytics-id" content="G-XXXXXXXXXX">
+```
+
+After an ID is configured, visitors can allow or decline analytics. The Google script is only requested after consent. The site records page views plus `project_open`, `contact_click`, `outbound_click`, `theme_change`, and `cookie_consent_update` events. Event details use project keys, page sections, and external destination domains; they do not send email addresses, typed content, or full outbound URLs. Visitors can reopen the choice from **Cookie settings** in the footer. Reports appear in Google Analytics under **Reports → Engagement → Events**.
 
 ## Content review before public release
 

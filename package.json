@@ -1,1 +1,1 @@
-{"name":"elliott-davis-portfolio","version":"1.0.0","private":true,"type":"module","scripts":{"dev":"node scripts/serve.mjs","check":"node --check dist/app.js"}}
+{"name":"elliott-davis-portfolio","version":"1.0.0","private":true,"type":"module","scripts":{"dev":"node scripts/serve.mjs","check":"node --check dist/app.js && node --check dist/analytics.js && node scripts/check-analytics.mjs"}}
